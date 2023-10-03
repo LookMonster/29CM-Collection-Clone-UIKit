@@ -29,9 +29,7 @@ public class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
     
-    // 레이아웃 초기 설정을 수행하는 메서드
     private func resetLayout() {
-        // 최소 투명도가 유효한 범위 내에 있는지 확인
         if minimumAlpha > 1 || minimumAlpha < 0 {
             minimumAlpha = 1
         }
@@ -41,20 +39,27 @@ public class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         if let collectionView = self.collectionView {
             let clvW = collectionView.frame.size.width
-            let insetLeftRight = (clvW - itemSize.width) * 0.5
+            
+            // 셀 사이즈를 조정하여 더 작게 만듭니다.
+            let itemWidth: CGFloat = clvW * 0.8
+            itemSize = CGSize(width: itemWidth, height: itemSize.height)
+            
+            // 컬렉션뷰의 양쪽 여백을 계산하여 중앙에 위치하도록 합니다.
+            let insetLeftRight = (clvW - itemWidth) * 0.5
             var inset = collectionView.contentInset
             inset.left = insetLeftRight
             inset.right = insetLeftRight
             collectionView.contentInset = inset
             
-            if isPagingEnabled {
-                collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-            }
-            
-            let offsetW = itemSize.width * transformScale * 0.5
-            let newSpacing = minimumLineSpacing - offsetW
-            minimumLineSpacing = newSpacing
-        }
+             if isPagingEnabled {
+                 collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+             }
+             
+             let offsetW = itemSize.width * transformScale * 0.5
+             let newSpacing = minimumLineSpacing - offsetW
+
+             minimumLineSpacing -= newSpacing
+         }
     }
     
     // 현재 화면에 보이는 엘리먼트의 레이아웃 속성을 반환하는 메서드

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class StyleCell: UICollectionViewCell {
     
@@ -17,6 +18,10 @@ class StyleCell: UICollectionViewCell {
         let bgImageView = UIImageView()
         contentView.addSubview(bgImageView)
         self.bgImageView = bgImageView
+        
+        bgImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     override func layoutSubviews() {

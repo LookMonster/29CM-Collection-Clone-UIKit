@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
     
@@ -37,10 +38,9 @@ class ViewController: UIViewController {
         layout.transformScale = (300 - 250) / 300.0
         layout.minimumLineSpacing = 10
         layout.minimumAlpha = 0.8
-        
-//        let itemW:CGFloat = 570 * 0.5 + 20
+
         let itemW: CGFloat = view.bounds.width - 40
-        let itemH:CGFloat = (388.0 / 706.0) * itemW
+        let itemH: CGFloat = view.bounds.height - 300
         layout.itemSize = CGSize(width: itemW, height: itemH)
     }
     
@@ -65,6 +65,10 @@ class ViewController: UIViewController {
         collectionView.delegate = self
         
         collectionView.register(StyleCell.self, forCellWithReuseIdentifier: "cell")
+        
+        collectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 }
 
@@ -77,6 +81,13 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! StyleCell
         cell.bgImageView.image = UIImage.init(named: datas[indexPath.row])
+        
+        let cornerRadiusValue : CGFloat = 20.0
+
+        cell.layer.cornerRadius = cornerRadiusValue
+        cell.bgImageView.layer.cornerRadius = cornerRadiusValue
+        cell.bgImageView.clipsToBounds = true
+        
         return cell
     }
 }
