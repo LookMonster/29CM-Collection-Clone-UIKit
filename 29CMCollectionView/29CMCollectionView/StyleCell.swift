@@ -11,7 +11,7 @@ import SnapKit
 
 class StyleCell: UICollectionViewCell {
     
-    var bgImageView:UIImageView!
+    var bgImageView: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

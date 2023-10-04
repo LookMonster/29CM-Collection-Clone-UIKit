@@ -34,17 +34,15 @@ public class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
             minimumAlpha = 1
         }
         
-        scrollDirection = .horizontal // 수평 스크롤 방향
+        scrollDirection = .horizontal
         minimumInteritemSpacing = 0
         
         if let collectionView = self.collectionView {
             let clvW = collectionView.frame.size.width
             
-            // 셀 사이즈를 조정하여 더 작게 만듭니다.
             let itemWidth: CGFloat = clvW * 0.8
             itemSize = CGSize(width: itemWidth, height: itemSize.height)
             
-            // 컬렉션뷰의 양쪽 여백을 계산하여 중앙에 위치하도록 합니다.
             let insetLeftRight = (clvW - itemWidth) * 0.5
             var inset = collectionView.contentInset
             inset.left = insetLeftRight
@@ -69,7 +67,6 @@ public class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
             let visibleRect = CGRect(x: collectionView.contentOffset.x, y: collectionView.contentOffset.y, width: collectionView.frame.size.width, height: collectionView.frame.size.height)
             
-            // 레이아웃 속성을 복사하여 수정
             guard let copyAttributes = NSArray(array: attributes, copyItems: true) as? [UICollectionViewLayoutAttributes] else { return nil }
             
             let newAttributes = copyAttributes.map { (attribute) -> UICollectionViewLayoutAttributes in
@@ -126,11 +123,12 @@ public class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
             if let attributes = self.layoutAttributesForElements(in: lastRect) {
                 
-                var adjustOffsetX = CGFloat(MAXFLOAT);
+                var adjustOffsetX = CGFloat(MAXFLOAT)
+                
                 for att in attributes {
                     let offsetX = abs(att.center.x - centerX)
                     if offsetX < abs(adjustOffsetX) {
-                        adjustOffsetX = att.center.x - centerX;
+                        adjustOffsetX = att.center.x - centerX
                     }
                 }
                 
