@@ -72,18 +72,23 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource {
         let imageName = datas[indexPath.row]
         cell.bgImageView.image = UIImage(named: imageName)
 
+        if let visibleCell = collectionView.visibleCells.first as? StyleCell {
+            
+            let backgroundImageView = UIImageView(image: visibleCell.bgImageView.image)
+            addBlurEffectToImageView(backgroundImageView)
+            
+            collectionView.backgroundView = backgroundImageView
+        }
+
         let cornerRadiusValue: CGFloat = 20.0
 
         cell.layer.cornerRadius = cornerRadiusValue
         cell.bgImageView.layer.cornerRadius = cornerRadiusValue
         cell.bgImageView.clipsToBounds = true
 
-        let backgroundImageView = UIImageView(image: UIImage(named: imageName))
-        addBlurEffectToImageView(backgroundImageView)
-        collectionView.backgroundView = backgroundImageView
-
         return cell
     }
+
     
     private func addBlurEffectToImageView(_ imageView: UIImageView) {
         let blurEffect = UIBlurEffect(style: .light)
